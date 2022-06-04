@@ -1,7 +1,8 @@
 import React from 'react';
 import { BsFillStarFill } from "react-icons/bs";
 const ProductCard = ({product}) => {
-    const {name, description, img, Warranty, price, minOrderQuantity, availableQuantity} = product;
+  console.log("product", product);
+  const {name, description, img, Warranty, price, minOrderQuantity, availableQuantity} = product;
 return (
 <div className="card card-compact mb-2 container p-2 bg-base-100 shadow-xl">
   <figure><img src={img} alt="Product" /></figure>

@@ -1,11 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import useProductsData from '../../Hooks/useProductsData';
 import ProductCard from './ProductCard';
 
 const ProductMain = () => {
-  const [products] = useProductsData();
+  const [products, setProducts] = useState([]);
   const [pages, setPages] = useState(0);
   const [pageData, setPageData] = useState(0);
+  const [pageSize, setPageSize] = useState(6);
+
+   useEffect(() => {
+     fetch(`http://localhost:4000/product?page=${pageData}&size=${pages}`)
+       .then((res) => res.json())
+       .then((data) => setProducts(data));
+       console.log(products);
+   }, [pageData,pageSize]);
 
   useEffect(()=>{
     const url = "http://localhost:4000/productCount";
@@ -16,7 +23,7 @@ const ProductMain = () => {
       const countPage = Math.ceil(count/6);
       setPages(countPage)
     })
-  },[])
+  },[pages])
 
   return (
     <div>
@@ -28,13 +35,24 @@ const ProductMain = () => {
           ))}
         </div>
         <div className="flex justify-center mt-4 mb-4">
-          {[...Array(pages).keys()].map((page) => (
+          {[...Array(pages).keys(Array.index)].map((page) => (
             <button
-              onClick={() =>setPageData(page)}
-              className={pageData === page ? 'btn m-3 bg-lime-800': 'btn m-3'}>
-              {page + 1}
+              onClick={() => setPageData(page)}
+              className={pageData === page ? "btn m-3 bg-lime-800" : "btn m-3"}
+            >
+              {page}
             </button>
           ))}
+          {
+            <select
+              className="btn m-3"
+              onChange={(e) => setPageSize(e.target.value)}
+            >
+              <option value="4">4</option>
+              <option value="6">6</option>
+              <option value="8">8</option>
+            </select>
+          }
         </div>
       </section>
     </div>
