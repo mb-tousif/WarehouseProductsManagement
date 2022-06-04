@@ -8,7 +8,7 @@ const ProductMain = () => {
   const [pageSize, setPageSize] = useState(6);
 
    useEffect(() => {
-     fetch(`http://localhost:4000/product?page=${pageData}&size=${pages}`)
+     fetch(`http://localhost:4000/products?page=${pageData}&size=${pages}`)
        .then((res) => res.json())
        .then((data) => setProducts(data));
        console.log(products);
@@ -23,7 +23,7 @@ const ProductMain = () => {
       const countPage = Math.ceil(count/6);
       setPages(countPage)
     })
-  },[pages])
+  },[])
 
   return (
     <div>
@@ -35,7 +35,7 @@ const ProductMain = () => {
           ))}
         </div>
         <div className="flex justify-center mt-4 mb-4">
-          {[...Array(pages).keys(Array.index)].map((page) => (
+          {[...Array(pages).keys()].map((page) => (
             <button
               onClick={() => setPageData(page)}
               className={pageData === page ? "btn m-3 bg-lime-800" : "btn m-3"}
